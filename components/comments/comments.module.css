@@ -1,0 +1,83 @@
+.container {
+    margin-top: 50px;
+}
+
+.title {
+    color: var(--softTextColor);
+    margin-bottom: 30px;
+    
+}
+
+.write {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+}
+
+.input {
+    padding: 20px;
+    width: 100%;
+    font-family: inherit;
+    font-size: 15px;
+    resize: vertical;
+}
+
+.input:focus {
+    outline: 2px solid #465781;
+}
+
+.button {
+    cursor: pointer;
+    padding: 16px 20px;
+    color: white;
+    font-weight: bold;
+    background-color: teal;
+    border: none;
+    border-radius: 10px;
+    transition: all .3s;
+}
+
+.comments {
+    margin-top: 50px;
+}
+
+.comment {
+    margin-bottom: 50px;
+}
+
+.button:hover {
+    background-color: rgb(22, 165, 165);
+}
+
+.user {
+    display: flex;
+    align-items: centere;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.image {
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.userInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    color: var(--softTextColor);
+}
+
+.username {
+    font-weight: 500;
+}
+
+.date {
+    font-size: 14px;
+}
+
+.description {
+    font-size: 18px;
+    font-weight: 300;
+}

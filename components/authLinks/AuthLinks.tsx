@@ -4,6 +4,7 @@ import Link from "next/link";
 import styles from "./authLinks.module.css"
 import { useEffect, useState } from "react";
 import { signOut, useSession } from "next-auth/react";
+import { useDebounce, useDebouncedCallback } from "use-debounce";
 
 const AuthLinks = () => {
 
@@ -11,21 +12,14 @@ const AuthLinks = () => {
   const { status } = useSession()
 
   function handleToggleOpen() {
-    console.log(window.innerWidth)
+    setOpen(!open)
   }
 
-  function handleResize() {
-    let timer;
-
-    clearTimeout(timer);
-
-
-    timer = setTimeout(() => {
-      console.log(window.innerWidth)
-    }, 1000)
-
-    
-  }
+  const handleResize = useDebouncedCallback(() => {
+    if(window.innerWidth >= 640) {
+      setOpen(false);
+    }
+  }, 1000)
 
   useEffect(() => {
     window.addEventListener("resize", handleResize)

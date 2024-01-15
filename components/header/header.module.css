@@ -6,10 +6,6 @@
     height: 100px;
 }
 
-.social, .logo, .links {
-    flex: 1;
-}
-
 .social {
     display: flex;
     gap: 10px;

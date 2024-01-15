@@ -43,8 +43,13 @@
     padding: 2px 0;
 }
 
+.category {
+    text-transform: uppercase;
+}
+
 @media screen and (max-width: 1280px) {
     .imageContainer {
         display: none;
     }
 }
+

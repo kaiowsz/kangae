@@ -1,23 +1,26 @@
 import Image from "next/image"
 import styles from "./card.module.css"
 import Link from "next/link"
+import { IPost } from "@/@types/IPost"
 
-const Card = () => {
+const Card = ({post}: {post: IPost}) => {
   return (
     <div className={styles.container}>
-        <div className={styles.imageContainer}>
-            <Image src="/p1.jpeg" alt="Image" className={styles.image} fill />
-        </div>
+        {post.img && (
+            <div className={styles.imageContainer}>
+                <Image src={post.img} alt="Image" className={styles.image} fill />
+            </div>
+        )}
         <div className={styles.textContainer}>
             <div className={styles.detail}>
-                <span className={styles.date}>11.02.2023 • </span>
-                <span className={styles.category}>CULTURE</span>
+                <span className={styles.date}>{post.createdAt.substring(0, 10)} • </span>
+                <span className={styles.category}>{post.catSlug}</span>
             </div>
-            <Link href="/">
-                <h2>Lorem ipsum dolor sit amet consectur.</h2>
+            <Link href={`/posts/${post.slug}`}>
+                <h2>{post.title}</h2>
             </Link>
-            <p className={styles.description}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis sapiente vitae architecto eveniet vel rerum, sunt voluptate modi officia ratione quia, optio qui nobis eius ullam, unde quam ipsum eaque.</p>
-            <Link className={styles.link} href="/">Read More</Link>
+            <p className={styles.description}>{post.desc.substring(0, 60)}</p>
+            <Link className={styles.link} href={`/posts/${post.slug}`}>Read More</Link>
         </div>
     </div>
   )

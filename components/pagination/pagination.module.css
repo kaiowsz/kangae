@@ -10,4 +10,15 @@
     background-color: crimson;
     color: white;
     cursor: pointer;
+    border-radius: 10px;
+    transition: 0.5s all;
+}
+
+.button:hover {
+    background-color: rgb(153, 9, 38);
+}
+
+.button:disabled {
+    background-color: rgba(220, 20, 60, 0.336);
+    cursor: not-allowed;
 }

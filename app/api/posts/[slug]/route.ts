@@ -8,10 +8,11 @@ export const GET = async (req: NextRequest, {params}: any) => {
 
 
     try {
-        const post = await prisma.post.findUnique({
-            where: { slug }
+        const post = await prisma.post.update({
+            where: {slug},
+            data: {views: {increment: 1}},
+            include: {user: true}
         })
-
         return new NextResponse(JSON.stringify(post))
     } catch (error) {
         console.log(error)

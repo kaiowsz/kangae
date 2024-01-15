@@ -1,0 +1,77 @@
+.container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.container_unauth {
+    display: flex;
+    margin-top: 60px;
+    justify-content: center;
+    align-items: center;
+    font-size: 25px;
+}
+
+.link_unauth {
+    text-decoration: underline;
+    display: flex;
+    align-items: center;
+}
+
+.editor {
+    display: flex;
+    gap: 20px;
+    height: 700px;
+    position: relative;
+}
+
+.button, .addButton {
+    width: 36px;
+    height: 36px;
+    background-color: transparent;
+    border: 1px solid var(--textColor);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.add {
+    display: flex;
+    gap: 20px;
+    background-color: var(--bg);
+    position: absolute;
+    z-index: 100;
+    width: 100%;
+    left: 50px;
+}
+
+.input {
+    padding: 50px;
+    font-size: 64px;
+    border: none;
+    outline: none;
+    background-color: transparent;
+    color: var(--textColor);
+}
+
+.input::placeholder {
+    color: #b3b3b1;
+}
+
+.textArea {
+    width: 100%;
+}
+
+.publish {
+    position: absolute;
+    top: 30px;
+    right: 20px;
+    padding: 10px 20px;
+    border: none;
+    background-color: #1a8917;
+    color: white;
+    cursor: pointer;
+    border-radius: 20px;
+}

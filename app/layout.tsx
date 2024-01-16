@@ -6,6 +6,7 @@ import Footer from "@/components/footer/Footer";
 import ThemeProvider from "@/providers/ThemeProvider";
 import { ThemeContextProvider } from "@/context/ThemeContext";
 import AuthProvider from "@/providers/AuthProvider";
+import { Toaster } from "react-hot-toast";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -32,6 +33,7 @@ export default function RootLayout({
                 <Footer />
               </div>
             </div>
+            <Toaster position="top-center" />
           </ThemeProvider>
           </ThemeContextProvider>
         </AuthProvider>

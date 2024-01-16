@@ -8,6 +8,7 @@ import useSWR from "swr";
 import Loader from "../loader/Loader";
 import { IComment } from "@/@types/IComment";
 import { useState } from "react";
+import toast from "react-hot-toast";
 
 const fetcher = async (url: string) => {
     const res = await fetch(url)
@@ -29,6 +30,8 @@ const Comments = ({slug}: any) => {
     const [desc, setDesc] = useState("")
 
     async function handleSubmit() {
+        if(!desc || desc.trim() === "") return toast.error("Comment must not be empty.");
+
         await fetch(`/api/comments`, {
             method: "POST",
             body: JSON.stringify({desc, postSlug: slug})
@@ -50,7 +53,7 @@ const Comments = ({slug}: any) => {
                 placeholder="Write a comment..." 
                 cols={30} 
                 rows={10}/>
-                <button onClick={handleSubmit} className={styles.button}>Submit</button>
+                <button onClick={handleSubmit} className={`${styles.button}`} disabled={!desc}>Submit</button>
             </div>
         ): (
             <Link href="/login">Login to write a comment</Link>

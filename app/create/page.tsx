@@ -9,60 +9,85 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Loader from "@/components/loader/Loader";
 import Link from "next/link";
+import { v4 as uuidv4 } from "uuid"
 
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { app } from "@/utils/firebase";
-
+import toast from "react-hot-toast";
 const storage = getStorage(app);
 
 const Create = () => {
 
-    const [file, setFile] = useState<null | string | object>(null)
+    const [file, setFile] = useState<null | File>(null)
     const [open, setOpen] = useState(false)
     const [value, setValue] = useState("")
     const [media, setMedia] = useState("")
     const [title, setTitle] = useState("")
+    const [catSlug, setCatSlug] = useState("")
+    const [isPublishing, setIsPublishing] = useState(false);
 
-    useEffect(() => {
-        const upload = () => {
-            const name = new Date().getTime + (file as any).name
-            const storageRef = ref(storage, name)
-
-            const uploadTask = uploadBytesResumable(storageRef, (file as any));
-
-            uploadTask.on("state_changed", (snapshot) => {
-                const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-
-                switch(snapshot.state) {
-                    case "paused":
-                        console.log("Upload is paused")
-                        break;
-                    case "running": 
-                        console.log("Upload is running")
-                        break;
-                }
-            }, (error) => {},
-            () => {
-                getDownloadURL(uploadTask.snapshot.ref).then((downloadURL: any) => {
-                    setMedia(downloadURL)
-                })
-            }
-            
-            )
-        }
-
-        file && upload();
-    }, [file])
-
+    /** This function create a slug based on the title received. The slug is required to save in the database, serving as a unique ID. */
     function slugify(title: string) {
-        return title.toLowerCase()
+        let slug = title.toLowerCase()
         .trim()
         .replace(/[^\w\s-]/g, "")
         .replace(/[\s_-]+/g, "-")
         .replace(/^-+|-+$/g, "")
+
+        let uniqueID = uuidv4();
+
+        return `${slug}-${uniqueID.substring(0,8)}`;
+    }
+
+    async function uploadPostWithImage() {
+        if(!file) {
+            setIsPublishing(false)
+            return;
+        }
+
+        const name = file.name;
+        const storageRef = ref(storage, name);
+
+        const uploadTask = uploadBytesResumable(storageRef, file);
+
+        uploadTask.on("state_changed", (snapshot) => {
+            const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            console.log(`Upload is ${progress}% done.`)
+        }, (error: any) => {
+            console.log("Unable to upload the file.")
+            toast.error(error);
+            setIsPublishing(false);
+        },
+        () => {
+            getDownloadURL(uploadTask.snapshot.ref).then(async(downloadURL: string) => {
+                const res = await fetch(`/api/posts`, {
+                    method: "POST",
+                    body: JSON.stringify({
+                        title,
+                        desc: value,
+                        img: downloadURL,
+                        slug: slugify(title),
+                        catSlug: catSlug || "coding"
+                    })
+                });
+
+                if(res.ok) toast.success("Post created successfully.")
+                if(!res.ok) toast.error("Could not create post. Please, try again.")
+
+                setIsPublishing(false);
+            })
+        }
+        )
     }
 
     async function handleSubmit() {
+        setIsPublishing(true);
+
+        if(file) {
+            await uploadPostWithImage();
+            return;
+        }
+        
         const res = await fetch(`/api/posts`, {
             method: "POST",
             body: JSON.stringify({
@@ -70,11 +95,13 @@ const Create = () => {
                 desc: value,
                 img: media,
                 slug: slugify(title),
-                catSlug: "coding"
+                catSlug: catSlug || "coding"
             })
-        })
+        });
 
-        console.log(res)
+        if(res.ok) toast.success("Post created successfully")
+
+        setIsPublishing(false);
     }
 
     function handleChangeFile(event: ChangeEvent<HTMLInputElement>) {
@@ -84,8 +111,6 @@ const Create = () => {
     }
 
     const { status } = useSession();
-
-    const router = useRouter();
 
     if(status === "loading") {
         return <Loader />
@@ -103,7 +128,47 @@ const Create = () => {
     <main className={styles.container}>
         <input type="text" placeholder="Title" className={styles.input} onChange={e => setTitle(e.target.value)} value={title} />
 
-        {/* <input type="text" placeholder="Category" /> */}
+        <select className={styles.select} onChange={event => setCatSlug(event.target.value)}>
+            <option value="style">Style</option>
+            <option value="fashion">Fashion</option>
+            <option value="food">Food</option>
+            <option value="culture">Culture</option>
+            <option value="travel">Travel</option>
+            <option value="Coding">Coding</option>
+        </select>
+
+        <div className={styles.custom_select}>
+            <button className={styles.select_button}>
+                <span className={styles.selected_value}>Open this select menu</span>
+                <span className={styles.arrow}></span>
+            </button>
+            <ul className={styles.select_dropdown}>
+                <li>
+                    <input type="text" />
+                    <label htmlFor=""></label>
+                </li>
+                <li>
+                    <input type="text" />
+                    <label htmlFor=""></label>
+                </li>
+                <li>
+                    <input type="text" />
+                    <label htmlFor=""></label>
+                </li>
+                <li>
+                    <input type="text" />
+                    <label htmlFor=""></label>
+                </li>
+                <li>
+                    <input type="text" />
+                    <label htmlFor=""></label>
+                </li>
+                <li>
+                    <input type="text" />
+                    <label htmlFor=""></label>
+                </li>
+            </ul>
+        </div>
 
         <div className={styles.editor}>
             <button className={styles.button} onClick={() => setOpen(!open)}>
@@ -130,7 +195,7 @@ const Create = () => {
 
             <ReactQuill className={styles.textArea} theme="bubble" value={value} onChange={setValue} placeholder="Tell your story..."  />
         </div>
-        <button className={styles.publish} onClick={handleSubmit}>Publish</button>
+        <button className={`${styles.publish} ${isPublishing && styles.publishing}`} onClick={handleSubmit}>{isPublishing ? "Publishing..." : "Publish"}</button>
     </main>
     )
 }

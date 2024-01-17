@@ -26,8 +26,6 @@ export const GET = async (req: NextRequest) => {
 export const POST = async (req: NextRequest) => {
     const session: unknown = await getAuthSession();
 
-    console.log(session);
-
     if(!session) {
         return new NextResponse(JSON.stringify({message: "Not authenticated.", status: 401}))
     }

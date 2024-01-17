@@ -8,8 +8,6 @@ const CategoryList = async () => {
 
   const data = await getCategories();
 
-  console.log(data);
-
   return (
     <section className={styles.container}>
       <h2 className={styles.title}>Popular Categories</h2>

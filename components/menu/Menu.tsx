@@ -7,8 +7,6 @@ import { getPopularPosts } from "@/utils/getData"
 const Menu = async () => {
   const popularPosts = await getPopularPosts();
 
-  console.log(popularPosts)
-
   return (
     <aside className={styles.container}>
       <h3 className={styles.subtitle}>What's hot</h3>

@@ -18,7 +18,6 @@ export default function Home({searchParams}: any) {
       <div className={styles.content}>
         <CardList page={page} />
         <Menu />
-
       </div>
     </main>
   )

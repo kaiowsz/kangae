@@ -4,6 +4,7 @@ import Card from "../card/Card";
 import { getPosts } from "@/utils/getData";
 import { IPost } from "@/@types/IPost";
 import Pagination from "../pagination/Pagination";
+import Link from "next/link";
 
 const CardList = async ({page, category}: {page: number, category?: any}) => {
 
@@ -18,6 +19,11 @@ const CardList = async ({page, category}: {page: number, category?: any}) => {
     <section className={styles.container}>
       <h2 className={styles.title}>Recent Posts</h2>
       <div className={styles.posts}>
+
+        {posts.length === 0 && (
+          <h3 className={styles.notFound}>There is no posts of this category. <Link href="/create" className={styles.link}>Be the first to create one</Link>.</h3>
+        )}
+
         {posts.map((post) => (
           <Card key={post.id} post={post} />
         ))}

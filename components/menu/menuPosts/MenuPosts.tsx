@@ -13,7 +13,7 @@ const MenuPosts = ({withImage, popularPosts}: MenuPostsProps) => {
         <div className={styles.items}>
 
           {popularPosts?.map(popPost => (
-              <Link href={popPost.slug} className={styles.item}>
+              <Link href={`/posts/${popPost.slug}`} className={styles.item}>
                 {popPost.img && (
                   <div className={styles.imageContainer}>
                     <Image src={popPost.img} alt="" fill className={styles.image} />

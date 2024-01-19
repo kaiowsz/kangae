@@ -8,9 +8,6 @@ const Pagination = ({page, hasNext, hasPrev}: any) => {
   
   const router = useRouter();
 
-  useEffect(() => {
-    console.log(document.location.href)
-  }, [])
 
   function handleCurrentPage(state: "prev" | "next") {
     if(state === "prev") router.push(`?page=${page - 1}`)

@@ -11,10 +11,6 @@ export default function Home({searchParams}: any) {
 
   const page = parseInt(searchParams.page) || 1;
 
-  if(typeof document !== "undefined") {
-    console.log(document.location.href)
-  }
-
   return (
     <main className={styles.container}>
       <Featured />

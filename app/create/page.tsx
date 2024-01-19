@@ -6,11 +6,10 @@ import Image from "next/image";
 import styles from "./create.module.css";
 import { ChangeEvent, useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
 import Loader from "@/components/loader/Loader";
 import Link from "next/link";
-import { v4 as uuidv4 } from "uuid"
 
+import { v4 as uuidv4 } from "uuid"
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { app } from "@/utils/firebase";
 import toast from "react-hot-toast";
@@ -123,6 +122,10 @@ const Create = () => {
             </main>
         )
     }
+
+    useEffect(() => {
+        console.log(document.location.href)
+    }, [])
 
     return (
     <main className={styles.container}>

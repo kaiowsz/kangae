@@ -1,15 +1,19 @@
-import Image from "next/image"
 import styles from "./page.module.css"
 
 import Featured from "@/components/featured/Featured"
 import CategoryList from "@/components/categoryList/CategoryList"
 import CardList from "@/components/cardList/CardList"
 import Menu from "@/components/menu/Menu"
+import { useEffect } from "react"
 
 
 export default function Home({searchParams}: any) {
 
   const page = parseInt(searchParams.page) || 1;
+
+  if(typeof document !== "undefined") {
+    console.log(document.location.href)
+  }
 
   return (
     <main className={styles.container}>

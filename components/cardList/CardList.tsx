@@ -1,4 +1,3 @@
-import Image from "next/image";
 import styles from "./cardList.module.css";
 import Card from "../card/Card";
 import { getPosts } from "@/utils/getData";

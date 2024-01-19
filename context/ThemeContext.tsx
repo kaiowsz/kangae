@@ -12,6 +12,7 @@ export const ThemeContextProvider = ({children}: {children: React.ReactNode}) =>
     const [theme, setTheme] = useState(() => {return getThemeFromLocalStorage()});
 
     function getThemeFromLocalStorage() {
+        
         // verify if it's client component
         if(typeof window !== "undefined") { 
             const value = localStorage.getItem("theme");

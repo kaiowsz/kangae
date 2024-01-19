@@ -6,7 +6,6 @@ export const GET = async (req: NextRequest, {params}: any) => {
 
     const { slug } = params;
 
-
     try {
         const post = await prisma.post.update({
             where: {slug},

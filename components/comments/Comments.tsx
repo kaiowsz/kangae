@@ -39,6 +39,7 @@ const Comments = ({slug}: any) => {
 
         mutate()
         setDesc("")
+        toast.success("Comment created successfully.")
     }
 
     return (

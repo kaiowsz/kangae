@@ -11,7 +11,7 @@ const Footer = () => {
             <h2>Kangae</h2>
           </div>
           <p className={styles.description}>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. In earum culpa impedit, voluptatum exercitationem voluptate blanditiis explicabo ab sed cum consectetur atque voluptas aspernatur architecto, mollitia iste velit fuga provident!
+            Kangae is a blog that allows users to create posts, discover new topics and much more. This project is completely open-source and you can find it on GitHub.
           </p>
           <div className={styles.icons}>
             <Image src="/facebook.png" alt="Facebook icon" width={18} height={18} />

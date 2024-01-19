@@ -19,7 +19,8 @@ const Card = ({post}: {post: IPost}) => {
             <Link href={`/posts/${post.slug}`}>
                 <h2>{post.title}</h2>
             </Link>
-            <p className={styles.description}>{post.desc.substring(0, 60)}</p>
+            <div className={styles.description} dangerouslySetInnerHTML={{__html: post.desc.substring(0,100) + "..."}} />
+
             <Link className={styles.link} href={`/posts/${post.slug}`}>Read More</Link>
         </div>
     </div>

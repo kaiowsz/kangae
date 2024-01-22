@@ -1,7 +1,10 @@
 "use client"
 
-import ReactQuill from "react-quill";
-import "react-quill/dist/quill.bubble.css"
+// import ReactQuill from "react-quill";
+
+import dynamic from "next/dynamic";
+const ReactQuill = dynamic(() => import("react-quill"), {ssr: false})
+
 import Image from "next/image";
 import styles from "./create.module.css";
 import { ChangeEvent, useEffect, useState } from "react";

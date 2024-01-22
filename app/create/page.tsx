@@ -109,23 +109,19 @@ const Create = () => {
         }
     }
 
-    const { status } = useSession();
+    // const { status } = useSession();
 
-    if(status === "loading") {
-        return <Loader />
-    }
+    // if(status === "loading") {
+    //     return <Loader />
+    // }
 
-    if(status === "unauthenticated") {
-        return (
-            <main className={styles.container_unauth}>
-                <h1>You need to be logged in to create posts. <Link className={styles.link_unauth} href="/login">Log in</Link></h1>
-            </main>
-        )
-    }
-
-    useEffect(() => {
-        console.log(document.location.href)
-    }, [])
+    // if(status === "unauthenticated") {
+    //     return (
+    //         <main className={styles.container_unauth}>
+    //             <h1>You need to be logged in to create posts. <Link className={styles.link_unauth} href="/login">Log in</Link></h1>
+    //         </main>
+    //     )
+    // }
 
     return (
     <main className={styles.container}>

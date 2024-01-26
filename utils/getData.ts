@@ -16,7 +16,7 @@ export async function getCategories() {
 
 export async function getPosts(page: number, category: string) {
 
-    const res = await fetch(`http://localhost:3000/api/posts?page=${page}&cat=${category || ""}`, {
+    const res = await fetch(`${process.env.API_URL}/api/posts?page=${page}&cat=${category || ""}`, {
         cache: "no-store"
     })
 
@@ -29,7 +29,7 @@ export async function getPosts(page: number, category: string) {
 
 export async function getPostById(slug: any) {
         
-    const res = await fetch(`http://localhost:3000/api/posts/${slug}`, {
+    const res = await fetch(`${process.env.API_URL}/api/posts/${slug}`, {
         cache: "no-store"
     })
 
@@ -41,7 +41,7 @@ export async function getPostById(slug: any) {
 }
 
 export async function getPopularPosts() {
-    const res = await fetch(`http://localhost:3000/api/posts/popular`)
+    const res = await fetch(`${process.env.API_URL}/api/posts/popular`)
 
     if(!res.ok) throw new Error("Failed");
 

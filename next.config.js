@@ -18,7 +18,8 @@ const nextConfig = {
                 protocol: "https"
             }
         ]
-    }
+    },
+    env: { API_URL: "https://kangae.vercel.app" }
 }
 
 module.exports = nextConfig

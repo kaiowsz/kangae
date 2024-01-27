@@ -14,6 +14,8 @@ const fetcher = async (url: string) => {
     const res = await fetch(url)
     const data = await res.json();
 
+    console.log(data, url);
+
     if(!res.ok) {
         const error = new Error(data.message)
         throw error;
@@ -25,12 +27,21 @@ const fetcher = async (url: string) => {
 const Comments = ({slug}: any) => {
     const { status } = useSession();
 
-    const { data, mutate, isLoading }: {data: IComment[], isLoading: boolean, mutate: () => void} = useSWR(`http://localhost:3000/api/comments?postSlug=${slug}`, fetcher);
+    const url = `${process.env.API_URL}/api/comments?postSlug=${slug}`
+
+    const { data, mutate, isLoading }: {data: IComment[], isLoading: boolean, mutate: () => void} = useSWR(url, async(url) => {
+        const response = await fetch(url);
+        const data = await response.json();
+
+        return data;
+    });
+    
 
     const [desc, setDesc] = useState("")
 
     async function handleSubmit() {
         if(!desc || desc.trim() === "") return toast.error("Comment must not be empty.");
+
 
         await fetch(`/api/comments`, {
             method: "POST",
@@ -61,7 +72,7 @@ const Comments = ({slug}: any) => {
         )}
 
         <div className={styles.comments}>
-            {isLoading ? <Loader /> : data.map((comment: any) => (
+            {isLoading ? <Loader /> : data && data.map((comment: any) => (
                 <div className={styles.comment} key={comment._id}>
                     <div className={styles.user}>
                         <Image src={comment.user.image} className={styles.image} alt={`${comment.user.image}'s  image`} width={50} height={50} />

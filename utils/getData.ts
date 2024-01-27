@@ -1,9 +1,7 @@
 import { ICategory } from "@/@types/ICategory";
 
 export async function getCategories() {
-    const res = await fetch("http://localhost:3000/api/categories", {
-        cache: "no-store"
-    })
+    const res = await fetch(`https://kangae.vercel.app/api/categories`)
 
     if(!res.ok) {
         throw new Error("Failed to get categories")
@@ -16,9 +14,7 @@ export async function getCategories() {
 
 export async function getPosts(page: number, category: string) {
 
-    const res = await fetch(`${process.env.API_URL}/api/posts?page=${page}&cat=${category || ""}`, {
-        cache: "no-store"
-    })
+    const res = await fetch(`https://kangae.vercel.app/api/posts?page=${page}&cat=${category || ""}`)
 
     if(!res.ok) throw new Error("Failed to get posts")
 
@@ -29,9 +25,7 @@ export async function getPosts(page: number, category: string) {
 
 export async function getPostById(slug: any) {
         
-    const res = await fetch(`${process.env.API_URL}/api/posts/${slug}`, {
-        cache: "no-store"
-    })
+    const res = await fetch(`https://kangae.vercel.app/api/posts/${slug}`)
 
     if(!res.ok) {
         throw new Error("Failed.")
@@ -41,7 +35,7 @@ export async function getPostById(slug: any) {
 }
 
 export async function getPopularPosts() {
-    const res = await fetch(`${process.env.API_URL}/api/posts/popular`)
+    const res = await fetch(`https://kangae.vercel.app/api/posts/popular`)
 
     if(!res.ok) throw new Error("Failed");
 
